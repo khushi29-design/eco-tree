@@ -1,0 +1,55 @@
+# =====================================================================
+# .htaccess — Hostinger (Apache / LiteSpeed) settings for the static site
+# Copied into /out by `npm run build`; upload it with the rest of /out to public_html.
+# =====================================================================
+
+Options -Indexes
+DirectoryIndex index.html
+
+# ---- Force HTTPS and the www domain (activate SSL in hPanel first) ----
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteCond %{HTTP_HOST} ^ecotreelogics\.com$ [NC]
+RewriteRule ^ https://www.ecotreelogics.com%{REQUEST_URI} [L,R=301]
+
+# ---- Clean URLs: /about -> /about/ (pages are exported as folder/index.html) ----
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^(.*[^/])$ /$1/ [L,R=301]
+
+# ---- Friendly 404 page ----
+ErrorDocument 404 /404.html
+
+# ---- Security headers ----
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set Strict-Transport-Security "max-age=31536000"
+</IfModule>
+
+# ---- Caching: hashed build files forever, media for a month, HTML always fresh ----
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "\.(webp|jpg|jpeg|png|svg|ico|mp4|woff2)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+</IfModule>
+<IfModule mod_headers.c>
+  <If "%{REQUEST_URI} =~ m#^/_next/static/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+</IfModule>
+
+# ---- Compression ----
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml text/plain application/xml
+</IfModule>
+
+# ---- Correct types ----
+AddType image/webp .webp
+AddType application/manifest+json .webmanifest

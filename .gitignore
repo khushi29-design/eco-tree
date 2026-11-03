@@ -1,0 +1,23 @@
+# dependencies
+/node_modules
+
+# build output (rebuilt by `npm run build` — never commit)
+/.next
+/out
+
+# secrets — NEVER commit these
+.env
+.env.local
+.env.*.local
+
+# raw, very large source media (photos/videos before optimisation, the PPT)
+# Keep these on your computer or Google Drive; only the optimised files in /public go to GitHub.
+/media-source
+
+# OS / editor clutter
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+.vscode/*
+!.vscode/extensions.json

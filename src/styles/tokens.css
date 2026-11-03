@@ -1,0 +1,48 @@
+/* =========================================================================
+   tokens.css — the EcoTree Logics design system.
+   Change a colour or size here and it updates across the whole website.
+   ========================================================================= */
+:root {
+  /* Brand palette */
+  --forest-deep: #102a20;   /* Deep Forest Green — main dark background */
+  --forest: #254c35;        /* Nature Green */
+  --emerald: #176b4b;       /* Emerald — buttons, highlights on light backgrounds */
+  --leaf: #c5d9a5;          /* Leaf Green — accents on dark backgrounds */
+  --gold: #d7b879;          /* Earth Gold — premium accent */
+  --warm-white: #f5f4ec;    /* Warm White — light sections, text on dark */
+
+  /* Derived tones */
+  --forest-night: #0a1c15;
+  --forest-line: rgba(197, 217, 165, 0.16);
+  --ink: #13261d;           /* body text on light backgrounds */
+  --ink-soft: #3f5348;
+  --cream-soft: rgba(245, 244, 236, 0.72); /* secondary text on dark */
+  --cream-faint: rgba(245, 244, 236, 0.5);
+  --paper: #ecebe0;
+  --glass: rgba(16, 42, 32, 0.55);
+
+  /* Typography */
+  --font-display: "Fraunces Variable", "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Manrope Variable", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --fs-mega: clamp(2.8rem, 8vw, 7.5rem);
+  --fs-h1: clamp(2.4rem, 5.6vw, 5rem);
+  --fs-h2: clamp(1.9rem, 4vw, 3.4rem);
+  --fs-h3: clamp(1.25rem, 2vw, 1.6rem);
+  --fs-lead: clamp(1.08rem, 1.5vw, 1.32rem);
+  --fs-body: 1.02rem;
+  --fs-small: 0.88rem;
+  --fs-eyebrow: 0.76rem;
+
+  /* Layout */
+  --max: 1240px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --section: clamp(80px, 12vw, 160px);
+  --radius: 18px;
+  --radius-lg: 28px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 0.9s;
+  --header-h: 72px;
+}
