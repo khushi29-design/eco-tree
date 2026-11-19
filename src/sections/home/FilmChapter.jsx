@@ -44,7 +44,7 @@ export default function FilmChapter({ id, frames, poster, posterAlt, captions = 
   }, [seq.ready, seq.draw]);
 
   return (
-    <section id={id} className="film-chapter" ref={root} style={{ height: `${height}vh` }} aria-label={label}>
+    <section id={id} className="film-chapter" ref={root} style={{ "--film-h": `${height}vh` }} aria-label={label}>
       <div className="film-stage">
         {/* the poster is visible until the first frame decodes (and for reduced-data cases) */}
         <img className={`film-poster ${seq.ready ? "is-hidden" : ""}`} src={asset(poster)} alt={posterAlt || ""} loading="lazy" />

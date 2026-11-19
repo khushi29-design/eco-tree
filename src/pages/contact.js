@@ -35,7 +35,7 @@ export default function Contact() {
             <h2 style={{ fontSize: "var(--fs-h3)", marginBottom: 24 }}>Email, call or WhatsApp — or send an enquiry</h2>
             <div className="contact-methods" style={{ color: "var(--ink)" }}>
               <Reveal as="a" className="contact-method" href={mailLink()} style={{ borderColor: "rgba(16,42,32,.15)" }}>
-                <span className="icon"><IconMail /></span><span><small style={{ color: "var(--ink-soft)" }}>Email</small><strong>{c.email}</strong></span>
+                <span className="icon"><IconMail /></span><span><small style={{ color: "var(--ink-soft)" }}>Email</small><strong>{c.email.split("@")[0]}@<wbr />{c.email.split("@")[1]}</strong></span>
               </Reveal>
               <Reveal as="a" className="contact-method" href={telLink} delay={0.05} style={{ borderColor: "rgba(16,42,32,.15)" }}>
                 <span className="icon"><IconPhone /></span><span><small style={{ color: "var(--ink-soft)" }}>Phone</small><strong>{c.phoneDisplay}</strong></span>

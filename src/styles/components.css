@@ -36,7 +36,11 @@
   transition: background 0.5s var(--ease), transform 0.5s var(--ease), border-color 0.5s var(--ease);
   border-bottom: 1px solid transparent;
 }
-.site-header.is-solid { background: rgba(10, 28, 21, 0.78); backdrop-filter: blur(16px) saturate(140%); border-bottom-color: var(--forest-line); }
+/* The glass blur lives on a ::before layer, not on the header itself: backdrop-filter on the
+   header would trap the position:fixed mobile menu inside the 72px header bar. */
+.site-header::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; transition: background 0.5s var(--ease); }
+.site-header.is-solid::before { background: rgba(10, 28, 21, 0.78); -webkit-backdrop-filter: blur(16px) saturate(140%); backdrop-filter: blur(16px) saturate(140%); }
+.site-header.is-solid { border-bottom-color: var(--forest-line); }
 .site-header.is-hidden { transform: translateY(-100%); }
 .site-header .container { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; max-width: 1400px; }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
@@ -196,7 +200,7 @@
 }
 
 /* ---------- Breadcrumbs (components/Breadcrumbs.jsx) ---------- */
-.breadcrumbs ol { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0 0 26px; font-size: 0.84rem; color: var(--cream-faint); }
+.breadcrumbs ol { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 0; margin: 0 0 26px; font-size: 0.84rem; color: var(--cream-faint); }
 .breadcrumbs li + li::before { content: "/"; margin-right: 8px; opacity: 0.5; }
 .breadcrumbs a { text-decoration: none; color: var(--cream-soft); }
 .breadcrumbs a:hover { color: var(--gold); }
@@ -297,6 +301,12 @@
 .masonry figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 16px 14px; background: linear-gradient(transparent, rgba(10, 28, 21, 0.85)); font-size: 0.86rem; color: var(--warm-white); opacity: 0; transform: translateY(8px); transition: all 0.5s var(--ease); pointer-events: none; text-align: left; }
 .masonry button:hover + figcaption, .masonry button:focus-visible + figcaption { opacity: 1; transform: none; }
 @media (hover: none) { .masonry figcaption { opacity: 1; transform: none; } }
+/* phones: two photo columns (tap opens the full-size viewer with the caption) */
+@media (max-width: 560px) {
+  .masonry { column-count: 2; column-width: auto; column-gap: 10px; }
+  .masonry figure { margin-bottom: 10px; border-radius: 12px; }
+  .masonry figcaption { padding: 28px 10px 9px; font-size: 0.75rem; line-height: 1.35; }
+}
 .lightbox { position: fixed; inset: 0; z-index: 400; background: rgba(6, 16, 12, 0.94); backdrop-filter: blur(10px); display: grid; grid-template-rows: 1fr auto; padding: 60px 16px 20px; animation: fadeIn 0.4s var(--ease); }
 .lightbox figure { margin: 0; display: grid; place-items: center; min-height: 0; }
 .lightbox img { max-height: calc(100vh - 170px); width: auto; border-radius: 12px; animation: zoomIn 0.5s var(--ease); }
@@ -325,7 +335,16 @@
 .product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
 @media (max-width: 1080px) { .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 760px) { .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } }
-@media (max-width: 420px) { .product-grid { grid-template-columns: 1fr; } }
+@media (max-width: 340px) { .product-grid { grid-template-columns: 1fr; } }
+/* phones: compact 2-up cards so the catalogue isn't a long scroll */
+@media (max-width: 560px) {
+  .product-card .body { padding: 12px 12px 14px; }
+  .product-card h3 { font-size: 0.98rem; line-height: 1.25; margin: 6px 0 4px; }
+  .product-card p { font-size: 0.8rem; line-height: 1.45; margin-bottom: 10px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .product-card .cat { letter-spacing: 0.08em; }
+  .product-card .more { font-size: 0.8rem; min-height: 32px; display: flex; align-items: flex-end; }
+}
 .product-card { display: flex; flex-direction: column; background: #fff; border-radius: var(--radius); overflow: hidden; text-decoration: none; color: var(--ink); border: 1px solid rgba(16, 42, 32, 0.08); transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease); }
 .product-card:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -30px rgba(16, 42, 32, 0.4); }
 .product-card .body { padding: 18px 18px 20px; display: flex; flex-direction: column; flex: 1; }
@@ -495,3 +514,42 @@
 .typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-soft); animation: blink 1.2s infinite; }
 .typing i:nth-child(2) { animation-delay: 0.2s; } .typing i:nth-child(3) { animation-delay: 0.4s; }
 @keyframes blink { 50% { opacity: 0.2; } }
+
+/* =========================================================================
+   Mobile & touch — finger-friendly sizes, readable labels, iPhone safe areas.
+   Tap targets follow the 44 × 44 px guideline (Apple HIG / WCAG 2.5.5).
+   ========================================================================= */
+@media (pointer: coarse), (max-width: 760px) {
+  .text-link { min-height: 44px; }
+  .breadcrumbs a { display: inline-flex; align-items: center; min-height: 44px; }
+  .breadcrumbs ol { margin-top: -10px; margin-bottom: 16px; }
+  .footer-col ul { gap: 0; }
+  .footer-col ul a { min-height: 44px; align-items: center; }
+  .footer-col:not(.footer-contact) ul a::after { bottom: 8px; }
+  .footer-contact ul { gap: 8px; }
+  .footer-contact a, .footer-contact__static { min-height: 44px; align-items: center; }
+  .footer-social a { width: 46px; height: 46px; }
+  .footer-top-link { min-height: 44px; }
+  html .hero-film__toggle { width: 44px; height: 44px; }
+  html .method-steps li { padding: 4px 0; }
+  html .method-steps button { flex: 1; min-height: 44px; text-align: left; padding: 8px 0; }
+  .nav-dropdown a { min-height: 44px; align-items: center; }
+  .ecobot-form input { font-size: 16px; } /* stops iOS zooming into the field */
+  main h2 > a { display: inline-block; padding-block: 5px; }
+}
+@media (max-width: 760px) {
+  /* small uppercase labels never below 12px on phones */
+  html :is(.os-num, .philo-word__label, .quad .axis, .footer-cta__eyebrow, .footer-col h3,
+  .footer-contact small, .status-chip, .product-card .cat, .hero-film__ui, .placeholder-art small, .cat-tile__count) { font-size: 0.75rem; }
+}
+/* iPhone notch / home-bar safe areas (the site uses viewport-fit=cover) */
+.site-header { padding-top: env(safe-area-inset-top); height: calc(var(--header-h) + env(safe-area-inset-top)); }
+.ecobot-launcher { bottom: calc(20px + env(safe-area-inset-bottom)); right: calc(20px + env(safe-area-inset-right)); }
+@media (max-width: 620px) { .ecobot-launcher { bottom: calc(14px + env(safe-area-inset-bottom)); right: calc(14px + env(safe-area-inset-right)); } }
+.site-footer { padding-bottom: calc(28px + env(safe-area-inset-bottom)); }
+@media (max-width: 1080px) { .main-nav { padding-bottom: calc(40px + env(safe-area-inset-bottom)); } }
+/* mobile menu: lock the page behind it and keep it below the (notch-adjusted) header */
+@media (max-width: 1080px) {
+  html.menu-open, html.menu-open body { overflow: hidden; }
+  .main-nav { top: calc(var(--header-h) + env(safe-area-inset-top)); overscroll-behavior: contain; }
+}

@@ -188,7 +188,7 @@ export default function EnquiryForm({ type: initialType = "general", preset = ""
 
         <div className="field">
           <label style={{ display: "flex", gap: 10, fontWeight: 500, alignItems: "flex-start" }}>
-            <input id="f-consent" type="checkbox" checked={v.consent} onChange={set("consent")} style={{ width: 18, height: 18, marginTop: 4, flex: "none" }} aria-invalid={!!errors.consent} />
+            <input id="f-consent" type="checkbox" checked={v.consent} onChange={set("consent")} style={{ width: 22, height: 22, marginTop: 2, flex: "none", accentColor: "var(--emerald)" }} aria-invalid={!!errors.consent} />
             <span>I agree that EcoTree Logics may contact me about this enquiry. <span className="req">*</span></span>
           </label>
           {errors.consent && <span className="error">{errors.consent}</span>}
