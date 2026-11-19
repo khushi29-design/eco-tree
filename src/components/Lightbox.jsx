@@ -3,6 +3,7 @@
  * Keyboard: ← → to move, Esc to close. Swipe left/right on phones.
  */
 import { useEffect, useRef } from "react";
+import { asset } from "@/utils/asset";
 
 export default function Lightbox({ items, index, onClose, onIndex }) {
   const closeBtn = useRef(null);
@@ -45,7 +46,7 @@ export default function Lightbox({ items, index, onClose, onIndex }) {
       }}
     >
       <figure key={item.src}>
-        <img src={`${item.src}.webp`} alt={item.alt} />
+        <img src={asset(`${item.src}.webp`)} alt={item.alt} />
       </figure>
       <figcaption>
         {item.caption} <span className="muted small">({index + 1} / {items.length})</span>

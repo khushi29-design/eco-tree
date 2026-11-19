@@ -24,9 +24,13 @@ export const mainNav = [
 
 export const footerNav = [
   {
-    title: "Company",
+    title: "Explore",
     links: [
       { label: "About Us", href: "/about/" },
+      { label: "Projects", href: "/projects/" },
+      { label: "Project Nisargavedh", href: "/projects/nisargavedh/" },
+      { label: "RET Conservation Park", href: "/projects/ret-conservation-park/" },
+      { label: "Products Catalogue", href: "/products/" },
       { label: "Our Impact", href: "/impact/" },
       { label: "Gallery", href: "/gallery/" },
       { label: "Contact Us", href: "/contact/" },
@@ -34,15 +38,6 @@ export const footerNav = [
   },
   {
     title: "Capabilities",
-    links: capabilities.map((c) => ({ label: c.title, href: `/capabilities/${c.slug}/` })),
-  },
-  {
-    title: "Work & Products",
-    links: [
-      { label: "Projects", href: "/projects/" },
-      { label: "Project Nisargavedh", href: "/projects/nisargavedh/" },
-      { label: "RET Conservation Park", href: "/projects/ret-conservation-park/" },
-      { label: "Products Catalogue", href: "/products/" },
-    ],
+    links: capabilities.map((c) => ({ label: c.title, href: `/capabilities/${c.slug}/`, letter: c.letter })),
   },
 ];

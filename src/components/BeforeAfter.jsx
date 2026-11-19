@@ -3,13 +3,14 @@
  * Uses a native range input underneath, so it works with keyboard, mouse and touch.
  */
 import { useState } from "react";
+import { asset } from "@/utils/asset";
 
 export default function BeforeAfter({ before, after, beforeAlt, afterAlt, label = "Compare before and after" }) {
   const [pos, setPos] = useState(50);
   return (
     <div className="before-after" style={{ "--pos": `${pos}%` }}>
-      <img src={before} alt={beforeAlt} loading="lazy" />
-      <div className="after-wrap"><img src={after} alt={afterAlt} loading="lazy" /></div>
+      <img src={asset(before)} alt={beforeAlt} loading="lazy" />
+      <div className="after-wrap"><img src={asset(after)} alt={afterAlt} loading="lazy" /></div>
       <span className="ba-label ba-label--before">Before</span>
       <span className="ba-label ba-label--after">After</span>
       <div className="handle" aria-hidden="true" />

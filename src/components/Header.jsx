@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { mainNav } from "@/data/navigation";
+import { asset } from "@/utils/asset";
 
 export default function Header() {
   const router = useRouter();
@@ -47,7 +48,7 @@ export default function Header() {
     <header className={`site-header ${solid || menuOpen || lightTop ? "is-solid" : ""} ${hidden && !menuOpen ? "is-hidden" : ""}`}>
       <div className="container">
         <Link href="/" className="brand" aria-label="EcoTree Logics — home">
-          <img src="/images/logo/ecotree-logics-mark-light.png" alt="" width="78" height="44" />
+          <img src={asset("/images/logo/ecotree-logics-mark-light.png")} alt="" width="78" height="44" />
           <span className="brand-text"><strong>EcoTree Logics</strong><span>Private Limited</span></span>
         </Link>
 

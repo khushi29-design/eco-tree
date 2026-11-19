@@ -8,6 +8,7 @@ import ProductCard, { ProductImage } from "@/components/ProductCard";
 import { products, getProduct, getCategory } from "@/data/products";
 import { breadcrumbSchema, productSchema } from "@/utils/schema";
 import { whatsappLink } from "@/utils/links";
+import { asset } from "@/utils/asset";
 
 export default function ProductPage({ slug }) {
   const p = getProduct(slug);
@@ -30,7 +31,7 @@ export default function ProductPage({ slug }) {
             <div>
               <div style={{ borderRadius: "var(--radius-lg)", overflow: "hidden" }}>
                 {images.length ? (
-                  <div className="product-img"><img src={images[shot]} alt={`${p.name} — image ${shot + 1}`} /></div>
+                  <div className="product-img"><img src={asset(images[shot])} alt={`${p.name} — image ${shot + 1}`} /></div>
                 ) : <ProductImage product={p} eager />}
               </div>
               {images.length > 1 && (
@@ -38,7 +39,7 @@ export default function ProductPage({ slug }) {
                   {images.map((src, i) => (
                     <button key={src} onClick={() => setShot(i)} aria-label={`Show image ${i + 1}`} aria-pressed={shot === i}
                       style={{ width: 72, height: 72, padding: 0, borderRadius: 10, overflow: "hidden", border: shot === i ? "2px solid var(--emerald)" : "1px solid #ccc" }}>
-                      <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      <img src={asset(src)} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                     </button>
                   ))}
                 </div>

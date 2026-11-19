@@ -5,6 +5,7 @@
  */
 import { Html, Head, Main, NextScript } from "next/document";
 import { organizationSchema, websiteSchema } from "@/utils/schema";
+import { asset } from "@/utils/asset";
 
 const GA4 = process.env.NEXT_PUBLIC_GA4_ID;
 const GSC = process.env.NEXT_PUBLIC_GSC_VERIFICATION;
@@ -15,10 +16,10 @@ export default function Document() {
       <Head>
         <meta charSet="utf-8" />
         <meta name="theme-color" content="#102A20" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/favicon/icon-192.png" />
-        <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
-        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="icon" href={asset("/favicon.ico")} sizes="any" />
+        <link rel="icon" type="image/png" sizes="192x192" href={asset("/favicon/icon-192.png")} />
+        <link rel="apple-touch-icon" href={asset("/favicon/apple-touch-icon.png")} />
+        <link rel="manifest" href={asset("/site.webmanifest")} />
         {GSC && <meta name="google-site-verification" content={GSC} />}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([organizationSchema(), websiteSchema()]) }} />
         {GA4 && (

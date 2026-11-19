@@ -21,3 +21,6 @@ Thumbs.db
 npm-debug.log*
 .vscode/*
 !.vscode/extensions.json
+
+# original homepage film (31 MB); the web versions live in public/videos/
+/homepage.mp4

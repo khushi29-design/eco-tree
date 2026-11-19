@@ -4,12 +4,16 @@
 
 A multi-page corporate website with a cinematic, scroll-driven homepage, built with the Scroll Site Generator approach:
 
-- a living 3D banyan forest (Three.js)
+- a full-screen cinematic brand-film hero
 - real drone footage that "plays" as you scroll
 - an interactive ridge-to-valley water model
 - 18 content pages, 25 product pages, galleries and the EcoBot chatbot
 
-The site is built as plain static files (HTML, CSS and JS), so it runs on **any Hostinger plan**.
+The site is built as plain static files (HTML, CSS and JS). The same code runs in three places with no edits:
+
+- **on your computer:** double-click `Open Website.bat`
+- **on Hostinger:** any plan, at the domain root
+- **on GitHub Pages:** free, at `https://<username>.github.io/<repo-name>/`
 
 ---
 
@@ -23,7 +27,8 @@ The site is built as plain static files (HTML, CSS and JS), so it runs on **any 
 7. [Enquiry forms](#7-enquiry-forms)
 8. [GitHub workflow in VS Code](#8-github-workflow-in-vs-code)
 9. [Deploy to Hostinger](#9-deploy-to-hostinger)
-10. [Items to supply or confirm](#10-items-to-supply-or-confirm)
+10. [Publish on GitHub Pages](#10-publish-on-github-pages)
+11. [Items to supply or confirm](#11-items-to-supply-or-confirm)
 
 ---
 
@@ -31,7 +36,7 @@ The site is built as plain static files (HTML, CSS and JS), so it runs on **any 
 
 | Page | Address |
 |---|---|
-| Home (3D forest + scroll film) | `/` |
+| Home (brand-film hero + scroll film) | `/` |
 | About Us | `/about/` |
 | Our Capabilities | `/capabilities/` |
 | 8 capability pages (one shared template) | `/capabilities/restoration-afforestation/`, `/conservation-engineering-water/`, `/biodiversity-habitats/`, `/nature-education-interpretation/`, `/carbon-sustainability-consultancy/`, `/digital-technology/`, `/nature-experiences-learning-play/`, `/field-equipment-eco-products/` |
@@ -58,7 +63,7 @@ ecotree-logics/
 │   ├── pages/               one file per page (Next.js routes)
 │   ├── sections/            big page blocks (hero, film chapters, galleries…)
 │   ├── components/          small reusable parts (header, footer, form, counters…)
-│   ├── animations/          3D forest, frame scrubber, smooth scroll, reveal hooks
+│   ├── animations/          frame scrubber, smooth scroll, reveal hooks
 │   ├── chatbot/             EcoBot: EcoBot.jsx (look) · engine.js (logic) · knowledge.js (answers)
 │   ├── data/                ALL WORDS, NUMBERS, PRODUCTS, MEDIA  ← edit here
 │   ├── styles/              tokens.css (colours/fonts) · globals.css · components.css · home.css
@@ -66,17 +71,27 @@ ecotree-logics/
 ├── scripts/
 │   ├── prepare-media.py     turns raw photos/videos into web files and scroll frames
 │   └── generate-sitemap.mjs writes sitemap.xml + robots.txt after each build
-├── .github/workflows/deploy-hostinger.yml   automatic deploy (optional)
+├── .github/workflows/
+│   ├── deploy-hostinger.yml      automatic upload to Hostinger (skips until FTP secrets are added)
+│   └── deploy-github-pages.yml   automatic publish to GitHub Pages
+├── Open Website.bat         double-click to build and open the site locally (Windows)
 ├── .env.example  .gitignore  package.json  next.config.mjs
 ```
 
-**Stack:** Next.js 15 (static export), React 19, GSAP + ScrollTrigger, Lenis, Three.js, and plain CSS. Fonts (Fraunces and Manrope) are self-hosted, so the site makes no Google Fonts calls.
+**Stack:** Next.js 15 (static export), React 19, GSAP + ScrollTrigger, Lenis, and plain CSS. Fonts (Fraunces and Manrope) are self-hosted, so the site makes no Google Fonts calls.
 
 ---
 
 ## 2. Install and run on your computer
 
-You need **Node.js 20 or newer** (from nodejs.org, LTS) and **VS Code**.
+You need **Node.js 20 or newer** (from nodejs.org, LTS) installed once.
+
+### Easiest: double-click
+Double-click **`Open Website.bat`** in the project folder. It installs the libraries the first time, builds your latest version, and opens **http://localhost:4000** in your browser. Close the black window to stop it.
+
+> **Why not just double-click `out/index.html`?** Browsers block a website opened straight from a folder (`file://…`): the hero film, scroll film, page links and forms don't work there. The site must be opened through a small local web server. `Open Website.bat` and `npm run preview` start one for you.
+
+### While editing (VS Code)
 
 ```bash
 # in VS Code: File → Open Folder → ecotree-logics, then Terminal → New Terminal
@@ -90,6 +105,7 @@ npm run build        # builds the real website into the folder  out/
 npm run preview      # preview the built site → http://localhost:4000
 ```
 Always check `npm run preview` before uploading. That preview is exactly what visitors will get.
+`npm start` runs build and preview together.
 
 Optional settings: copy `.env.example` to `.env.local` and fill in values. `.env.local` is never uploaded to GitHub.
 
@@ -111,6 +127,8 @@ All content lives in **`src/data/`**. You rarely need to touch the components.
 | Colours, fonts, spacing | `src/styles/tokens.css` |
 | Homepage film captions | `src/pages/index.js` (look for `captions={[ … ]}`) |
 
+**File paths in code:** write image, video and file paths from the root (`"/images/..."`). In data files that's all you need. If you add a *new* `<img>`, `<video>` or `fetch()` in a component, wrap the path in `asset(...)` from `src/utils/asset.js`, so it also works in the GitHub Pages sub-folder. `<Link href="/about/">` links don't need it.
+
 **Rule used throughout:** no invented facts, prices, certifications or clients. Every figure comes from the corporate presentation, and national statistics show their source.
 
 ---
@@ -130,6 +148,16 @@ All content lives in **`src/data/`**. You rarely need to touch the components.
 - **Short clips:** put the original in `media-source/videos/`, add it to `VIDEOS` in `prepare-media.py`, run `python3 scripts/prepare-media.py videos` (needs ffmpeg) and add an entry to `videos` in `media.js`. The script compresses to 540p and makes a poster image.
 - **Long films:** upload to YouTube and add `{ youtube: "VIDEO_ID", title, caption }` to `videos`. Don't put very large files in the website.
 - **Homepage scroll film:** chapters are listed in `FILM` in `prepare-media.py`, given as start and end seconds. After changing them, run `python3 scripts/prepare-media.py frames`.
+
+### Homepage hero film
+The original is `homepage.mp4` in the project folder (kept out of GitHub; too large). To replace the film, put the new file there and run, from the project folder:
+```bash
+ffmpeg -i homepage.mp4 -an -c:v libx264 -preset slower -crf 28 -pix_fmt yuv420p -vf "scale=1920:-2" -movflags +faststart public/videos/homepage-hero-1080.mp4
+ffmpeg -i homepage.mp4 -an -c:v libx264 -preset slow -crf 27 -pix_fmt yuv420p -vf "scale=960:-2" -movflags +faststart public/videos/homepage-hero-540.mp4
+ffmpeg -ss 1.2 -i homepage.mp4 -frames:v 1 -vf "scale=1920:-2" -quality 66 public/videos/homepage-hero-poster.webp
+ffmpeg -ss 1.2 -i homepage.mp4 -frames:v 1 -vf "scale=960:-2" -quality 66 public/videos/homepage-hero-poster-sm.webp
+```
+`-ss 1.2` is the second the poster is taken from. Pick a frame that isn't a plain white title card, and set the same number as `POSTER_TIME` in `HeroFilm.jsx`.
 
 ### Products
 Open `src/data/products.js`. The instructions are at the top of the file:
@@ -254,7 +282,26 @@ FTP (FileZilla) also works: upload the *contents* of `out/` into `public_html/`.
 
 ---
 
-## 10. Items to supply or confirm
+## 10. Publish on GitHub Pages
+
+GitHub Pages hosts the same site free at `https://<your-username>.github.io/<repo-name>/`. This is handy as a preview link to share before (or alongside) Hostinger.
+
+**One-time setup:**
+1. Push the project to GitHub (section 8).
+2. GitHub → your repo → **Settings → Pages** → *Build and deployment* → Source: **GitHub Actions**.
+3. Push to `main`, or go to Actions → *Deploy to GitHub Pages* → **Run workflow**. After 2–3 minutes, the Actions run shows the live link.
+
+The workflow `.github/workflows/deploy-github-pages.yml` detects the `/<repo-name>/` sub-folder automatically and builds the site for it. Images, videos, the scroll film and links all work there. Nothing needs editing.
+
+**Good to know:**
+- **Contact form:** GitHub Pages can't run PHP. Visitors there see the email/WhatsApp fallback. To make the form send from GitHub Pages too, get a free key at web3forms.com, then add repository **variables** (Settings → Secrets and variables → Actions → *Variables*): `NEXT_PUBLIC_FORM_PROVIDER` = `web3forms` and `NEXT_PUBLIC_WEB3FORMS_KEY` = your key.
+- **SEO:** once the Hostinger site is live, add the variable `NEXT_PUBLIC_SITE_URL` = `https://www.ecotreelogics.com`. Google then treats Hostinger as the main site and the GitHub copy as a duplicate.
+- **Both at once:** pushing to `main` updates GitHub Pages and (once the FTP secrets exist) Hostinger at the same time. Until those secrets are added, the Hostinger workflow skips without failing.
+- **Test the sub-folder build locally (optional):** `NEXT_PUBLIC_BASE_PATH=/ecotree-logics npm run build`. In Git Bash, put `MSYS_NO_PATHCONV=1` in front. Run `npm run build` again afterwards, before uploading to Hostinger.
+
+---
+
+## 11. Items to supply or confirm
 
 These are clearly marked on the site, not filled with invented content:
 
@@ -268,6 +315,5 @@ These are clearly marked on the site, not filled with invented content:
 - **`FROM_EMAIL`** mailbox for the contact form (see section 7).
 
 ### Notes on the visuals
-- The 3D banyan is generated in code, so there is no heavy model download. It is stylised and cinematic rather than photoreal.
-- Phones get fewer leaves and particles. Reduced-motion visitors get a still frame. Browsers without WebGL see the sunset photograph instead.
+- **Homepage hero film** (`src/sections/home/HeroFilm.jsx`): your brand film fills the screen with nothing laid over it. It opens from an inset window and recedes into a rounded card as you scroll. On portrait phones the whole film is shown over a blurred glow of itself, so its captions are never cut. A pause button and progress line sit at the bottom. The poster image appears instantly and stays as the fallback. Reduced-motion and data-saver visitors see the poster only. The page headline stays in the code as a hidden H1 for Google and screen readers.
 - The scroll film uses **your real drone footage** (Gabion.mp4 and DJI_0192.MP4), not AI-generated video. AI-generated stills or clips can be added later through the Scroll Site Generator's Higgsfield pipeline if a key is configured. Label any such footage as illustrative.

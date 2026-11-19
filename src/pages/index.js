@@ -1,6 +1,6 @@
 /**
  * Home page — one continuous scroll story (Scroll Site Generator structure):
- *   film:  3D forest hero → the problem → degraded-to-living transition → one system
+ *   film:  brand-film hero → the problem → degraded-to-living transition → one system
  *          → restoration drone film → ridge-to-valley water → evidence drone film
  *   brand: philosophy → capabilities → why us → projects → impact → products → experiences → closing
  */
@@ -9,7 +9,7 @@ import Seo from "@/components/Seo";
 import { pageSeo } from "@/data/seo";
 import { company, withWithout } from "@/data/company";
 import { projects } from "@/data/projects";
-import HeroForest from "@/sections/home/HeroForest";
+import HeroFilm from "@/sections/home/HeroFilm";
 import ProblemChapter from "@/sections/home/ProblemChapter";
 import RestorationTransition from "@/sections/home/RestorationTransition";
 import OneSystem from "@/sections/home/OneSystem";
@@ -32,7 +32,7 @@ export default function Home() {
     <>
       <Seo title={pageSeo.home.title} description={pageSeo.home.description} path="/" />
 
-      <HeroForest />
+      <HeroFilm />
 
       {/* Company introduction */}
       <section className="section intro-section" aria-labelledby="intro-title">

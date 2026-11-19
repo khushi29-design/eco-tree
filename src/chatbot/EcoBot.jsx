@@ -9,6 +9,7 @@ import { answer } from "./engine";
 import { greeting, suggestions } from "./knowledge";
 import { whatsappLink } from "@/utils/links";
 import { IconSend, IconWhatsApp } from "@/components/Icons";
+import { asset } from "@/utils/asset";
 
 const STORE = "ecobot-log-v1";
 
@@ -46,7 +47,7 @@ export default function EcoBot() {
   if (!open) {
     return (
       <button className="ecobot-launcher" onClick={() => setOpen(true)} aria-label="Open EcoBot, your nature guide">
-        <span className="avatar"><img src="/images/logo/ecotree-logics-mark-dark.png" alt="" width="30" height="17" /></span>
+        <span className="avatar"><img src={asset("/images/logo/ecotree-logics-mark-dark.png")} alt="" width="30" height="17" /></span>
         <span className="pulse" />
         EcoBot
       </button>
@@ -56,7 +57,7 @@ export default function EcoBot() {
   return (
     <div className="ecobot-panel" role="dialog" aria-modal="false" aria-label="EcoBot — Your Nature Guide" data-lenis-prevent>
       <div className="ecobot-head">
-        <span className="avatar"><img src="/images/logo/ecotree-logics-mark-dark.png" alt="" width="30" height="17" /></span>
+        <span className="avatar"><img src={asset("/images/logo/ecotree-logics-mark-dark.png")} alt="" width="30" height="17" /></span>
         <div>
           <strong>EcoBot — Your Nature Guide</strong>
           <small>Answers from the EcoTree Logics website</small>

@@ -6,6 +6,7 @@
 #   FTP_PASSWORD  your FTP password
 # Optional (Settings → Secrets → Actions → Variables tab): NEXT_PUBLIC_GA4_ID, NEXT_PUBLIC_GSC_VERIFICATION
 #
+# Until the secrets are added, this workflow simply skips (no failed runs).
 # Nothing secret is ever stored in the repository itself.
 name: Deploy to Hostinger
 
@@ -17,17 +18,27 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      HAS_FTP: ${{ secrets.FTP_SERVER != '' }}
     steps:
+      - name: Skip if Hostinger FTP secrets are not set yet
+        if: env.HAS_FTP != 'true'
+        run: echo "::notice::FTP_SERVER / FTP_USERNAME / FTP_PASSWORD secrets are not set, so the Hostinger upload was skipped."
+
       - uses: actions/checkout@v4
+        if: env.HAS_FTP == 'true'
 
       - uses: actions/setup-node@v4
+        if: env.HAS_FTP == 'true'
         with:
           node-version: 22
           cache: npm
 
       - run: npm ci
+        if: env.HAS_FTP == 'true'
 
       - name: Build static site
+        if: env.HAS_FTP == 'true'
         run: npm run build
         env:
           NEXT_PUBLIC_SITE_URL: https://www.ecotreelogics.com
@@ -36,6 +47,7 @@ jobs:
           NEXT_TELEMETRY_DISABLED: 1
 
       - name: Upload /out to public_html
+        if: env.HAS_FTP == 'true'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}

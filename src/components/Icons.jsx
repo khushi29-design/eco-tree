@@ -13,3 +13,10 @@ export const IconWhatsApp = (p) => (
 );
 /** Leaf-and-sprout outline used for clearly-marked product placeholders */
 export const IconSprout = (p) => (<svg {...base} viewBox="0 0 48 48" strokeWidth="1.4" {...p}><path d="M24 44V22" /><path d="M24 26c-9 0-14-6-14-14 8 0 14 5 14 14z" /><path d="M24 22c0-9 6-14 15-14 0 9-6 14-15 14z" /><path d="M14 44h20" /></svg>);
+
+/* Social icons (footer). Simple outline marks, drawn to match the icon set above. */
+export const IconInstagram = (p) => (<svg {...base} {...p}><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" /></svg>);
+export const IconLinkedIn = (p) => (<svg {...base} {...p}><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M8 10.5V16M8 7.6v.1M11.5 16v-5.5M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1.9 2.1 2.6V16" /></svg>);
+export const IconYouTube = (p) => (<svg {...base} {...p}><rect x="2.5" y="5.5" width="19" height="13" rx="4" /><path d="m10.5 9.5 4 2.5-4 2.5z" fill="currentColor" /></svg>);
+export const IconFacebook = (p) => (<svg {...base} {...p}><path d="M14 8.5h2V5h-2.4C11.3 5 10 6.5 10 8.7V11H8v3.3h2V21h3.4v-6.7h2.4L16.3 11h-2.9V9.2c0-.5.2-.7.6-.7z" /></svg>);
+export const IconArrowUp = (p) => (<svg {...base} {...p}><path d="M12 19V5M6 11l6-6 6 6" /></svg>);

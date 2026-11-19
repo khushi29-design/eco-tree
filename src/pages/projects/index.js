@@ -10,6 +10,7 @@ import { infrastructure } from "@/data/projects";
 import { videos } from "@/data/media";
 import { pageSeo } from "@/data/seo";
 import { breadcrumbSchema } from "@/utils/schema";
+import { asset } from "@/utils/asset";
 
 const crumbs = [{ label: "Home", href: "/" }, { label: "Projects", href: "/projects/" }];
 
@@ -40,7 +41,7 @@ export default function Projects() {
           <div className="infra-grid">
             {infrastructure.map((it, i) => (
               <Reveal className="infra-card" key={it.title} delay={(i % 3) * 0.08}>
-                <div className="ph"><img src={`${it.image}.webp`} alt={it.alt} loading="lazy" /></div>
+                <div className="ph"><img src={asset(`${it.image}.webp`)} alt={it.alt} loading="lazy" /></div>
                 <div className="body">
                   <span className="status-chip">Status: {it.status}</span>
                   <h3 style={{ marginTop: 8 }}>{it.title}</h3>

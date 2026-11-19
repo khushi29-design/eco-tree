@@ -16,6 +16,7 @@ import { products } from "@/data/products";
 import { projects } from "@/data/projects";
 import { company } from "@/data/company";
 import { whatsappLink, mailLink } from "@/utils/links";
+import { asset } from "@/utils/asset";
 
 const PROVIDER = process.env.NEXT_PUBLIC_FORM_PROVIDER || "php";
 const W3F_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "";
@@ -83,7 +84,7 @@ export default function EnquiryForm({ type: initialType = "general", preset = ""
         ok = res.ok && data.success === true;
         message = data.message || "";
       } else {
-        const res = await fetch("/api/contact.php", {
+        const res = await fetch(asset("/api/contact.php"), {
           method: "POST",
           headers: { "Content-Type": "application/json", Accept: "application/json" },
           body: JSON.stringify(payload),

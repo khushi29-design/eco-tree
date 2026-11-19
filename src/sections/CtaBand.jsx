@@ -8,6 +8,7 @@ import { closingCta } from "@/data/company";
 import { whatsappLink } from "@/utils/links";
 import { SplitWords, Reveal } from "@/components/Reveal";
 import { prefersReducedMotion } from "@/animations/useReveal";
+import { asset, assetSrcSet } from "@/utils/asset";
 
 function Fireflies() {
   const ref = useRef(null);
@@ -46,7 +47,7 @@ export default function CtaBand({ title = closingCta.title, text = closingCta.te
   return (
     <section className="cta-band" aria-labelledby="cta-title">
       <div className="cta-band__bg">
-        <img src="/images/forest/sunset-over-restored-plantation-nagpur.webp" srcSet="/images/forest/sunset-over-restored-plantation-nagpur-sm.webp 800w, /images/forest/sunset-over-restored-plantation-nagpur.webp 1920w" sizes="100vw" alt="" loading="lazy" />
+        <img src={asset("/images/forest/sunset-over-restored-plantation-nagpur.webp")} srcSet={assetSrcSet("/images/forest/sunset-over-restored-plantation-nagpur-sm.webp 800w, /images/forest/sunset-over-restored-plantation-nagpur.webp 1920w")} sizes="100vw" alt="" loading="lazy" />
       </div>
       <Fireflies />
       <div className="container">

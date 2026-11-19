@@ -3,12 +3,14 @@
  * Pass `src` WITHOUT the extension, e.g. "/images/forest/aerial-view-native-plantation-trenches".
  * It loads the small "-sm.webp" on phones and the full ".webp" on larger screens.
  */
+import { asset, assetSrcSet } from "@/utils/asset";
+
 export default function Img({ src, alt, className, sizes = "(max-width: 800px) 100vw, 60vw", priority = false, width, height, style }) {
   if (!src) return null;
   return (
     <img
-      src={`${src}.webp`}
-      srcSet={`${src}-sm.webp 800w, ${src}.webp 1920w`}
+      src={asset(`${src}.webp`)}
+      srcSet={assetSrcSet(`${src}-sm.webp 800w, ${src}.webp 1920w`)}
       sizes={sizes}
       alt={alt}
       className={className}

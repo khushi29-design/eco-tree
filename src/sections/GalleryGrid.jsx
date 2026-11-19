@@ -1,6 +1,7 @@
 /** GalleryGrid.jsx — masonry photo grid with optional category filter and a full-screen lightbox. */
 import { useCallback, useMemo, useState } from "react";
 import Lightbox from "@/components/Lightbox";
+import { asset } from "@/utils/asset";
 
 export default function GalleryGrid({ items, categories }) {
   const [cat, setCat] = useState("All");
@@ -21,7 +22,7 @@ export default function GalleryGrid({ items, categories }) {
         {shown.map((it, i) => (
           <figure key={it.src}>
             <button onClick={() => setOpen(i)} aria-label={`Open photo: ${it.caption}`}>
-              <img src={`${it.src}-sm.webp`} alt={it.alt} width={it.w} height={it.h} loading="lazy" decoding="async" />
+              <img src={asset(`${it.src}-sm.webp`)} alt={it.alt} width={it.w} height={it.h} loading="lazy" decoding="async" />
             </button>
             <figcaption>{it.caption}</figcaption>
           </figure>

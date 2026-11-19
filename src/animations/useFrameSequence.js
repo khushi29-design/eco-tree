@@ -11,6 +11,7 @@
  * - fit: "cover" fills the screen (best for real footage); "contain" shows the whole frame.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
+import { asset } from "@/utils/asset";
 
 async function decodeBlob(blob) {
   try {
@@ -40,11 +41,11 @@ export function useFrameSequence(name, { fit = "cover", enabled = true } = {}) {
     let alive = true;
     (async () => {
       try {
-        const m = await fetch(`/frames/${name}/manifest.json`).then((r) => { if (!r.ok) throw new Error("manifest"); return r.json(); });
+        const m = await fetch(asset(`/frames/${name}/manifest.json`)).then((r) => { if (!r.ok) throw new Error("manifest"); return r.json(); });
         if (!alive) return;
         count.current = m.count;
         blobs.current = new Array(m.count).fill(null);
-        const url = (i) => m.pattern.replace("%03d", String(i + 1).padStart(3, "0"));
+        const url = (i) => asset(m.pattern.replace("%03d", String(i + 1).padStart(3, "0")));
         let done = 0;
         // load in order of importance: every 8th frame first (so scrubbing works early), then the rest
         const order = [...Array(m.count).keys()].sort((a, b) => (a % 8 === 0 ? 0 : 1) - (b % 8 === 0 ? 0 : 1) || a - b);

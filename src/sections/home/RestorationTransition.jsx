@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { withWithout } from "@/data/company";
+import { asset } from "@/utils/asset";
 
 export default function RestorationTransition() {
   const root = useRef(null);
@@ -29,10 +30,10 @@ export default function RestorationTransition() {
     <section className="restoration-transition" ref={root} aria-label="From degraded land to a living landscape">
       <div className="rt-stage">
         <div className="rt-before">
-          <img src="/images/forest/native-saplings-drip-irrigation-rows.webp" alt="Freshly planted native saplings on dry, degraded ground with drip lines" loading="lazy" />
+          <img src={asset("/images/forest/native-saplings-drip-irrigation-rows.webp")} alt="Freshly planted native saplings on dry, degraded ground with drip lines" loading="lazy" />
         </div>
         <div className="rt-after">
-          <img src="/images/forest/aerial-view-native-plantation-trenches.webp" alt="Restored plantation with established native trees, seen from above" loading="lazy" />
+          <img src={asset("/images/forest/aerial-view-native-plantation-trenches.webp")} alt="Restored plantation with established native trees, seen from above" loading="lazy" />
         </div>
         <div className="rt-shade" aria-hidden="true" />
         <div className="container rt-caps">

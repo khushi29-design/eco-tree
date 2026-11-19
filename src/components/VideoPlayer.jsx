@@ -3,6 +3,7 @@
  * (nothing heavy is downloaded before that). Supports local files in /public/videos or YouTube IDs.
  */
 import { useRef, useState } from "react";
+import { asset } from "@/utils/asset";
 
 export default function VideoPlayer({ file, youtube, title, caption, duration }) {
   const [playing, setPlaying] = useState(false);
@@ -31,8 +32,8 @@ export default function VideoPlayer({ file, youtube, title, caption, duration })
         ) : (
           <video
             ref={vid}
-            src={playing ? `/videos/${file}.mp4` : undefined}
-            poster={`/videos/${file}-poster.jpg`}
+            src={playing ? asset(`/videos/${file}.mp4`) : undefined}
+            poster={asset(`/videos/${file}-poster.jpg`)}
             controls={playing}
             playsInline
             muted

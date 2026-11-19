@@ -12,6 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useFrameSequence } from "@/animations/useFrameSequence";
+import { asset } from "@/utils/asset";
 
 export default function FilmChapter({ id, frames, poster, posterAlt, captions = [], height = 400, label, children }) {
   const root = useRef(null);
@@ -46,7 +47,7 @@ export default function FilmChapter({ id, frames, poster, posterAlt, captions = 
     <section id={id} className="film-chapter" ref={root} style={{ height: `${height}vh` }} aria-label={label}>
       <div className="film-stage">
         {/* the poster is visible until the first frame decodes (and for reduced-data cases) */}
-        <img className={`film-poster ${seq.ready ? "is-hidden" : ""}`} src={poster} alt={posterAlt || ""} loading="lazy" />
+        <img className={`film-poster ${seq.ready ? "is-hidden" : ""}`} src={asset(poster)} alt={posterAlt || ""} loading="lazy" />
         <canvas ref={canvas} className="film-canvas" aria-hidden="true" />
         <div className="film-vignette" aria-hidden="true" />
         {near && seq.loaded < 1 && !seq.error && (

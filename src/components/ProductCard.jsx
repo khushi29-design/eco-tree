@@ -2,12 +2,13 @@
 import Link from "next/link";
 import { getCategory } from "@/data/products";
 import { IconSprout } from "./Icons";
+import { asset } from "@/utils/asset";
 
 export function ProductImage({ product, eager = false }) {
   return (
     <div className="product-img">
       {product.image ? (
-        <img src={product.image} alt={product.imageAlt || product.name} loading={eager ? "eager" : "lazy"} width="800" height="800" />
+        <img src={asset(product.image)} alt={product.imageAlt || product.name} loading={eager ? "eager" : "lazy"} width="800" height="800" />
       ) : (
         <div className="placeholder-art" role="img" aria-label={`${product.name} — photo coming soon`}>
           <IconSprout />

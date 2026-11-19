@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { categories, products } from "@/data/products";
 import { Reveal, SplitWords } from "@/components/Reveal";
+import { asset } from "@/utils/asset";
 
 const art = {
   everyday: "/images/forest/native-sapling-with-stake-drip-line",
@@ -25,7 +26,7 @@ export default function ProductsPreview() {
           {categories.map((c, i) => (
             <Reveal key={c.id} delay={i * 0.08}>
               <Link className="cat-tile" href={`/products/?category=${c.id}`}>
-                <img src={`${art[c.id]}-sm.webp`} alt="" loading="lazy" />
+                <img src={asset(`${art[c.id]}-sm.webp`)} alt="" loading="lazy" />
                 <span className="cat-tile__count">{products.filter((p) => p.category === c.id).length} items</span>
                 <h3>{c.name}</h3>
                 <span className="more">View catalogue →</span>

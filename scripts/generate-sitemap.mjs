@@ -7,13 +7,14 @@
  */
 import { readdirSync, statSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { join, relative } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const OUT = new URL("../out/", import.meta.url).pathname;
+const OUT = fileURLToPath(new URL("../out/", import.meta.url));
 
 // read NEXT_PUBLIC_SITE_URL from .env.local / .env if present
 let site = process.env.NEXT_PUBLIC_SITE_URL;
 for (const f of [".env.local", ".env.production", ".env"]) {
-  const p = new URL(`../${f}`, import.meta.url).pathname;
+  const p = fileURLToPath(new URL(`../${f}`, import.meta.url));
   if (!site && existsSync(p)) {
     const m = readFileSync(p, "utf8").match(/^NEXT_PUBLIC_SITE_URL=(.+)$/m);
     if (m) site = m[1].trim();
